@@ -1,35 +1,77 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='es'>
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Page Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Clasificación de Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+    </style>
 </head>
-<body>
-    <h1>My Flask App</h1>
-    <p>Welcome to my Flask app!</p>
-    <p> Ingresa los datos ingresos y gastos para ver al grupo al que pertenece.</p>
+<body class="d-flex align-items-center justify-content-center py-5">
 
-    <form method="post" action="/predict">
-        <div class="mb-3">
-            <label for="ingresos" class="form-label">Ingresos:</label>
-            <input type="number" class="form-control" id="ingresos" name="ingresos" required>
-        </div>
-        <div class="mb-3">
-            <label for="gastos" class="form-label">Gastos:</label>
-            <input type="number" class="form-control" id="gastos" name="gastos" required>
-        </div>
-        <button type="submit" class="btn btn-outline-primary">Predecir Grupo</button>
-    </form>
+    <div class="container" style="max-width: 500px;">
+        <div class="card shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-2 text-primary fw-bold">Implementación de Clasificación de Clientes</h1>
+                <p class="text-muted">Ingresa los datos de ingresos y gastos para calcular el grupo al que pertenece el cliente.</p>
+            </div>
 
-    {% if prediccion  %}
-        <div class="alert alert-danger" role="alert">
-            <strong>Cliente pertenece al grupo:</strong> {{ prediccion }}
-        </div>
-        <p>Ingresos: {{ ingresos }}</p>
-        <p>Gastos: {{ gastos }}</p>
-    {% endif %}
+            <form method="post" action="/predict" class="mb-4">
+                <div class="mb-3">
+                    <label for="ingresos" class="form-label fw-semibold">Ingresos Mensuales</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-success"><i class="bi bi-cash-coin"></i></span>
+                        <input type="number" class="form-control" id="ingresos" name="ingresos" placeholder="Ej. 3500" required>
+                    </div>
+                    <div id="ingresosHelp" class="form-text">Suma total de ingresos netos percibidos en el mes.</div>
+                </div>
 
+                <div class="mb-3">
+                    <label for="gastos" class="form-label fw-semibold">Gastos Mensuales</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-danger"><i class="bi bi-credit-card-fill"></i></span>
+                        <input type="number" class="form-control" id="gastos" name="gastos" placeholder="Ej. 2000" required>
+                    </div>
+                    <div id="gastosHelp" class="form-text">Total de egresos, obligaciones y costos fijos mensuales.</div>
+                </div>
+
+                <div class="d-grid gap-2 pt-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-cpu me-2"></i>Predecir Grupo
+                    </button>
+                </div>
+            </form>
+
+            {% if prediccion %}
+                <hr class="text-muted my-4">
+                <div class="alert alert-info border-0 shadow-sm d-flex align-items-center" role="alert">
+                    <i class="bi bi-info-circle-fill me-3 fs-4 text-info"></i>
+                    <div>
+                        <strong class="d-block mb-1">Resultado del Análisis:</strong>
+                        <span class="badge bg-info text-dark fs-6">Grupo {{ prediccion }}</span>
+                    </div>
+                </div>
+                
+                <div class="card bg-light border-0 p-3 memory-summary">
+                    <div class="d-flex justify-content-between small text-muted mb-1">
+                        <span><i class="bi bi-arrow-up-short text-success"></i> Ingresos evaluados:</span>
+                        <span class="fw-bold">${{ ingresos }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between small text-muted">
+                        <span><i class="bi bi-arrow-down-short text-danger"></i> Gastos evaluados:</span>
+                        <span class="fw-bold">${{ gastos }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
