@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Page Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <h1>My Flask App</h1>
+    <p>Welcome to my Flask app!</p>
+    <p> Ingresa los datos ingresos y gastos para ver al grupo al que pertenece.</p>
+
+    <form method="post" action="/predict">
+        <div class="mb-3">
+            <label for="ingresos" class="form-label">Ingresos:</label>
+            <input type="number" class="form-control" id="ingresos" name="ingresos" required>
+        </div>
+        <div class="mb-3">
+            <label for="gastos" class="form-label">Gastos:</label>
+            <input type="number" class="form-control" id="gastos" name="gastos" required>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Predecir Grupo</button>
+    </form>
+
+    {% if prediccion  %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Cliente pertenece al grupo:</strong> {{ prediccion }}
+        </div>
+        <p>Ingresos: {{ ingresos }}</p>
+        <p>Gastos: {{ gastos }}</p>
+    {% endif %}
+
+</body>
+</html>
